@@ -9,12 +9,18 @@ export type OnClick = () => void;
 type ArrowButtonProps = {
 	isOpen: boolean;
 	onClick: OnClick;
+	arrowRef?: React.RefObject<HTMLDivElement>;
 };
 
-export const ArrowButton = ({ isOpen, onClick }: ArrowButtonProps) => {
+export const ArrowButton = ({
+	isOpen,
+	onClick,
+	arrowRef,
+}: ArrowButtonProps) => {
 	return (
 		/* Не забываем указаывать role и aria-label атрибуты для интерактивных элементов */
 		<div
+			ref={arrowRef}
 			role='button'
 			aria-label='Открыть/Закрыть форму параметров статьи'
 			tabIndex={0}
