@@ -37,7 +37,7 @@ export const ArticleParamsForm = ({
 	isOpen = false,
 	defaultState,
 }: ArticleParamsFormProps) => {
-	const [isOpenState, setIsOpenState] = useState(isOpen);
+	const [isMenuOpen, setIsMenuOpen] = useState(isOpen);
 	const container = useRef<HTMLElement>(null);
 	const arrow = useRef<HTMLDivElement>(null);
 	const [selectedState, setSelectedState] = useState(defaultState);
@@ -66,7 +66,10 @@ export const ArticleParamsForm = ({
 				!(event.target as HTMLElement).className.startsWith(
 					'Select-module__option'
 				) &&
-				setIsOpenState(false);
+				!(event.target as HTMLElement).parentElement?.className.startsWith(
+					'Select-module__option'
+				) &&
+				setIsMenuOpen(false);
 		};
 		document.addEventListener('click', close);
 		return () => document.removeEventListener('click', close);
@@ -76,11 +79,11 @@ export const ArticleParamsForm = ({
 		<>
 			<ArrowButton
 				arrowRef={arrow}
-				isOpen={isOpenState}
-				onClick={() => setIsOpenState(!isOpenState)}
+				isOpen={isMenuOpen}
+				onClick={() => setIsMenuOpen(!isMenuOpen)}
 			/>
 			<aside
-				className={clsx(styles.container, isOpenState && styles.container_open)}
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}
 				ref={container}>
 				<form className={styles.form} onSubmit={submitHandler}>
 					<Text as={'h2'} size={31} uppercase weight={800}>
